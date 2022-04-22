@@ -1,0 +1,24 @@
+h1 {
+  text-align: center;
+  font-size: 2em;
+  height: 2vh;
+  margin: 0;
+  margin: 2vh 0;
+}
+
+.center-content {
+  width: 100vw;
+  min-height: 94vh;
+  box-sizing: border-box;
+  padding: 0 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 950px) {
+  .center-content {
+    flex-direction: column;
+  }
+}
