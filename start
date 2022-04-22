@@ -1,1 +1,5 @@
-python3 -m http.server 8005
+#!/bin/bash
+DIRNAME=$(dirname "$0")
+
+# Note: we do not want sudo or we cannot kill the process
+python3 -m http.server --directory $DIRNAME 8005 
