@@ -1,0 +1,19 @@
+{
+  "name": "ORDLOH!",
+  "short_name": "ORDLOH!",
+  "start_url": "/",
+  "scope": "/",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "portrait",
+  "description": "ORDLOH!",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "related_applications": []
+}

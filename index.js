@@ -47,3 +47,13 @@ document.querySelector('#pop-counter').className = `c100 p${Math.round(100 - 100
 document.querySelector('#ord-counter').className = `c100 p${Math.round(100 - 100 * (daysToORD / serviceLength))} pink`
 document.querySelector('#pay-counter').className = `c100 p${Math.round(100 * (daysToPay / (daysFromLastPay + daysToPay)))} green`
 document.querySelector('#leave-counter').className = `c100 p${Math.round(100 * (thisYearClocked / leaveEntitled))} orange`
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js', { scope: '/' }).then(registration => {
+    console.log('Service Worker Registered')
+  })
+
+  navigator.serviceWorker.ready.then(registration => {
+    console.log('Service Worker Ready')
+  })
+}
