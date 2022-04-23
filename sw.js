@@ -1,8 +1,30 @@
-const cacheName = 'ordloh-2'
+const version = '2a'
+const cacheName = `ordloh-${version}`
 
-self.addEventListener('install', (e) => {
+function cacheFiles(files) {
+  return caches.open(cacheName).then(cache => {
+    return cache.addAll(files).then(() => self.skipWaiting())
+    .catch(e => {
+      console.error(e)
+      return ''
+    })
+  })
+}
+
+self.addEventListener('install', e => {
+  const timeStamp = Date.now()
+
+  caches.keys().then(function (cachesNames) {
+    return Promise.all(cachesNames.map((storedCacheName) => {
+      if (storedCacheName === cacheName || !storedCacheName.startsWith('transportsg')) return Promise.resolve()
+      return caches.delete(storedCacheName).then(() => {
+        console.log('Old cache ' + storedCacheName + ' deleted')
+      })
+    }))
+  })
+
   e.waitUntil(
-    caches.open(cacheName).then((cache) => cache.addAll([
+    cacheFiles([
       '/',
       '/leave.html',
       '/dayjs-utc-timezone-1.11.0.js',
@@ -12,17 +34,22 @@ self.addEventListener('install', (e) => {
       '/manifest.json',
       '/progress.css',
       '/TitilliumWeb.woff2'
-    ])),
-  )
-})
-
-self.addEventListener('fetch', (e) => {
-  console.log(e.request.url)
-  e.respondWith(
-    caches.match(e.request).then((response) => response || fetch(e.request)),
+    ])
   )
 })
 
 self.addEventListener('activate', event => {
   event.waitUntil(self.clients.claim())
+})
+
+self.addEventListener('fetch', event => {
+  if (event.request.method != 'GET') return
+
+  event.respondWith(
+    caches.open(cacheName)
+    .then(cache => cache.match(event.request, {ignoreSearch: true}))
+    .then(response => {
+      return response || fetch(event.request)
+    })
+  )
 })
