@@ -16,7 +16,7 @@ self.addEventListener('install', e => {
 
   caches.keys().then(function (cachesNames) {
     return Promise.all(cachesNames.map((storedCacheName) => {
-      if (storedCacheName === cacheName || !storedCacheName.startsWith('transportsg')) return Promise.resolve()
+      if (storedCacheName === cacheName || !storedCacheName.startsWith('ordloh')) return Promise.resolve()
       return caches.delete(storedCacheName).then(() => {
         console.log('Old cache ' + storedCacheName + ' deleted')
       })
