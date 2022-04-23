@@ -744,9 +744,7 @@ body {
   -webkit-transform: rotate(360deg);
   transform: rotate(360deg);
 }
-.c100:hover {
-  cursor: default;
-}
+
 /* .c100:hover > span.main-number {
   width: 3.33em;
   line-height: 3.33em;
@@ -767,6 +765,7 @@ body {
   width: 0.86em;
   height: 0.86em;
 } */
+
 .c100.blue .bar, .c100.blue .fill {
   border-color: #30bae7 !important;
 }

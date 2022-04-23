@@ -1,9 +1,10 @@
-const cacheName = 'ordloh-1'
+const cacheName = 'ordloh-2'
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(cacheName).then((cache) => cache.addAll([
       '/',
+      '/leave.html',
       '/dayjs-utc-timezone-1.11.0.js',
       '/icon.png',
       '/index.css',
