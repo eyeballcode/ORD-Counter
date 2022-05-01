@@ -13,18 +13,22 @@ let leaveUsed = [ // 0.5 - Half Day, 1.0 - Full Day
 
 leaveUsed.forEach(leave => { leave.year = leave.day.get('year') })
 
-let now = dayjs()
+let now = dayjs().startOf('day')
 let enlistment = dayjs('08 Feb 2022')
 let popDay = dayjs('03 June 2022')
 let ordDay = dayjs('07 Feb 2024')
-let nextPayDay = dayjs().startOf('month').add(1, 'month').add(9, 'days')
-let lastPayDay = dayjs().startOf('month').add(9, 'days')
+
+let nextPayDay
+if (now.get('day') <= 10) nextPayDay = dayjs().startOf('month').add(9, 'days')
+else nextPayDay = dayjs().startOf('month').add(1, 'month').add(9, 'days')
+let lastPayDay = nextPayDay.add(-1, 'month')
+
 let endOfYear = now.endOf('year')
 let startOfWorkYear = dayjs(Math.max(+now.startOf('year'), +enlistment))
 
-let daysToPOP = popDay.diff(now, 'days') + 1
-let daysToORD = ordDay.diff(now, 'days') + 1
-let daysToPay = nextPayDay.diff(now, 'days') + 1
+let daysToPOP = popDay.diff(now, 'days')
+let daysToORD = ordDay.diff(now, 'days')
+let daysToPay = nextPayDay.diff(now, 'days')
 
 let daysFromLastPay = now.diff(lastPayDay, 'days')
 
