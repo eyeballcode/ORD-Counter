@@ -19,7 +19,7 @@ let popDay = dayjs('03 June 2022')
 let ordDay = dayjs('07 Feb 2024')
 
 let nextPayDay
-if (now.get('day') <= 10) nextPayDay = dayjs().startOf('month').add(9, 'days')
+if (now.get('date') <= 10) nextPayDay = dayjs().startOf('month').add(9, 'days')
 else nextPayDay = dayjs().startOf('month').add(1, 'month').add(9, 'days')
 let lastPayDay = nextPayDay.add(-1, 'month')
 
