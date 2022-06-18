@@ -83,13 +83,12 @@ body {
 
 .c100 > span.caption {
   position: absolute;
-  width: 100%;
   z-index: 1;
   left: 0;
   top: 0.9em;
-  width: 8.33em;
-  line-height: 8.33em;
-  font-size: 0.12em;
+  width: 9.0909em;
+  line-height: 9.0909em;
+  font-size: 0.11em;
   color: #3c4761;
   display: block;
   text-align: center;

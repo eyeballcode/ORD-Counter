@@ -8,6 +8,11 @@ let leaveUsed = [ // 0.5 - Half Day, 1.0 - Full Day
     day: dayjs('04 Mar 2022'),
     duration: 1.0,
     title: 'BMTC 01/22 POP'
+  },
+  {
+    day: dayjs('06 June 2022'),
+    duration: 5.0,
+    title: 'BMTC 02/22 POP Block Leave'
   }
 ]
 
@@ -15,7 +20,7 @@ leaveUsed.forEach(leave => { leave.year = leave.day.get('year') })
 
 let now = dayjs().startOf('day')
 let enlistment = dayjs('08 Feb 2022')
-let popDay = dayjs('03 June 2022')
+let popDay = dayjs('04 June 2022')
 let ordDay = dayjs('07 Feb 2024')
 
 let nextPayDay
@@ -42,14 +47,27 @@ let thisYearLeave = leaveUsed.filter(leave => leave.year === thisYear)
 let thisYearClocked = thisYearLeave.reduce((acc, leave) => acc + leave.duration, 0)
 
 function initHomePage() {
-  document.querySelector('#pop-counter > span.main-number').textContent = daysToPOP
-  document.querySelector('#ord-counter > span.main-number').textContent = daysToORD
+  if (daysToPOP < 0) {
+    document.querySelector('#pop-counter > span.main-number').textContent = -daysToPOP
+    document.querySelector('#pop-counter > span.caption').textContent = 'Days since POP'
+    document.querySelector('#pop-counter').className = `c100 p100 blue`
+  } else {
+    document.querySelector('#pop-counter > span.main-number').textContent = daysToPOP
+    document.querySelector('#pop-counter').className = `c100 p${Math.round(100 - 100 * (daysToPOP / bmtLength))} blue`
+  }
+
+  if (daysToORD < 0) {
+    document.querySelector('#ord-counter > span.main-number').textContent = -daysToORD
+    document.querySelector('#ord-counter > span.caption').textContent = 'Days since ORD'
+    document.querySelector('#ord-counter').className = `c100 p100 pink`
+  } else {
+    document.querySelector('#ord-counter > span.main-number').textContent = daysToORD
+    document.querySelector('#ord-counter').className = `c100 p${Math.round(100 - 100 * (daysToORD / serviceLength))} pink`
+  }
+
   document.querySelector('#pay-counter > span.main-number').textContent = daysToPay
   document.querySelector('#leave-counter > span.main-number').textContent = `${leaveEntitled - thisYearClocked}/${leaveEntitled}`
 
-
-  document.querySelector('#pop-counter').className = `c100 p${Math.round(100 - 100 * (daysToPOP / bmtLength))} blue`
-  document.querySelector('#ord-counter').className = `c100 p${Math.round(100 - 100 * (daysToORD / serviceLength))} pink`
   document.querySelector('#pay-counter').className = `c100 p${Math.round(100 * (daysToPay / (daysFromLastPay + daysToPay)))} green`
   document.querySelector('#leave-counter').className = `c100 p${Math.round(100 * (thisYearClocked / leaveEntitled))} orange`
 }
