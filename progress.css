@@ -744,48 +744,26 @@ body {
   transform: rotate(360deg);
 }
 
-/* .c100:hover > span.main-number {
-  width: 3.33em;
-  line-height: 3.33em;
-  font-size: 0.3em;
-  color: #3c4761;
+.blue .bar, .blue .fill {
+  border-color: #31bff3 !important;
 }
 
-.c100:hover > span.caption {
-  width: 6.67em;
-  line-height: 6.67em;
-  font-size: 0.15em;
-  color: #3c4761;
+.purple .bar, .purple .fill {
+  border-color: #a484e9 !important;
 }
 
-.c100:hover:after {
-  top: 0.07em;
-  left: 0.07em;
-  width: 0.86em;
-  height: 0.86em;
-} */
+.pink .bar, .pink .fill {
+  border-color: #f4889a !important;
+}
 
-.c100.blue .bar, .c100.blue .fill {
-  border-color: #30bae7 !important;
+.orange .bar, .orange .fill {
+  border-color: #ffaf68 !important;
 }
-.c100.blue:hover > span.main-number {
-  color: #3c4761;
+
+.yellow .bar, .yellow .fill {
+  border-color: #f6e683 !important;
 }
-.c100.pink .bar, .c100.pink .fill {
-  border-color: #d74680 !important;
-}
-.c100.pink:hover > span.main-number {
-  color: #3c4761;
-}
-.c100.green .bar, .c100.green .fill {
+
+.green .bar, .green .fill {
   border-color: #15c7a8 !important;
-}
-.c100.green:hover > span.main-number {
-  color: #3c4761;
-}
-.c100.orange .bar, .c100.orange .fill {
-  border-color: #eb7d4b !important;
-}
-.c100.orange:hover > span.main-number {
-  color: #3c4761;
 }

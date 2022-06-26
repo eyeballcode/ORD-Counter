@@ -21,6 +21,8 @@ leaveUsed.forEach(leave => { leave.year = leave.day.get('year') })
 let now = dayjs().startOf('day')
 let enlistment = dayjs('08 Feb 2022')
 let popDay = dayjs('04 June 2022')
+let scsPostingDay = dayjs('13 Jun 2022')
+let scsGPDay = dayjs('18 Nov 2022')
 let ordDay = dayjs('07 Feb 2024')
 
 let nextPayDay
@@ -32,12 +34,14 @@ let endOfYear = now.endOf('year')
 let startOfWorkYear = dayjs(Math.max(+now.startOf('year'), +enlistment))
 
 let daysToPOP = popDay.diff(now, 'days')
+let daysToSCSGP = scsGPDay.diff(now, 'days')
 let daysToORD = ordDay.diff(now, 'days')
 let daysToPay = nextPayDay.diff(now, 'days')
 
 let daysFromLastPay = now.diff(lastPayDay, 'days')
 
 let bmtLength = popDay.diff(enlistment, 'days') + 1
+let scsLength = scsGPDay.diff(scsPostingDay, 'days') + 1
 let serviceLength = ordDay.diff(enlistment, 'days') + 1
 let yearLength = endOfYear.diff(startOfWorkYear, 'days') + 1
 
@@ -56,6 +60,15 @@ function initHomePage() {
     document.querySelector('#pop-counter').className = `c100 p${Math.round(100 - 100 * (daysToPOP / bmtLength))} blue`
   }
 
+  if (daysToSCSGP < 0) {
+    document.querySelector('#scs-gp-counter > span.main-number').textContent = -daysToSCSGP
+    document.querySelector('#scs-gp-counter > span.caption').textContent = 'Days since GP'
+    document.querySelector('#scs-gp-counter').className = `c100 p100 purple`
+  } else {
+    document.querySelector('#scs-gp-counter > span.main-number').textContent = daysToSCSGP
+    document.querySelector('#scs-gp-counter').className = `c100 p${Math.round(100 - 100 * (daysToSCSGP / scsLength))} purple`
+  }
+
   if (daysToORD < 0) {
     document.querySelector('#ord-counter > span.main-number').textContent = -daysToORD
     document.querySelector('#ord-counter > span.caption').textContent = 'Days since ORD'
@@ -68,14 +81,19 @@ function initHomePage() {
   document.querySelector('#pay-counter > span.main-number').textContent = daysToPay
   document.querySelector('#leave-counter > span.main-number').textContent = `${leaveEntitled - thisYearClocked}/${leaveEntitled}`
 
-  document.querySelector('#pay-counter').className = `c100 p${Math.round(100 * (daysToPay / (daysFromLastPay + daysToPay)))} green`
-  document.querySelector('#leave-counter').className = `c100 p${Math.round(100 * (thisYearClocked / leaveEntitled))} orange`
+  document.querySelector('#pay-counter').className = `c100 p${Math.round(100 * (daysToPay / (daysFromLastPay + daysToPay)))} orange`
+  document.querySelector('#leave-counter').className = `c100 p${Math.round(100 * (thisYearClocked / leaveEntitled))} yellow`
 }
 
 function initLeavePage() {
   let html = thisYearLeave.map(leave => {
+    let duration
+    if (leave.duration === 0.5) duration = 'Half Day'
+    else if (leave.duration === 1) duration = 'Full Day'
+    else duration = `${leave.duration} Days`
+
     return `<h2>${leave.title} (${leave.day.format('DD MMM YYYY')})</h2>
-<p>Duration: ${leave.duration === 0.5 ? 'Half' : 'Full'} Day</p>`
+<p>Duration: ${duration}</p>`
   }).join('')
 
   document.getElementById('leave-content').innerHTML = html
