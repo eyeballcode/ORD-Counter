@@ -28,7 +28,15 @@ let ordDay = dayjs('07 Feb 2024')
 let nextPayDay
 if (now.get('date') <= 10) nextPayDay = dayjs().startOf('month').add(9, 'days')
 else nextPayDay = dayjs().startOf('month').add(1, 'month').add(9, 'days')
-let lastPayDay = nextPayDay.add(-1, 'month')
+if ([0, 6].includes(nextPayDay.get('day'))) nextPayDay = nextPayDay.add(-1, 'day').set('day', 5)
+
+let lastPayDay = dayjs().startOf('month').add(-1, 'month').add(9, 'days')
+if ([0, 6].includes(lastPayDay.get('day'))) lastPayDay = lastPayDay.add(-1, 'day').set('day', 5)
+
+if (nextPayDay < now) {
+  lastPayDay = nextPayDay
+  nextPayDay = dayjs().startOf('month').add(1, 'month').add(9, 'days')
+}
 
 let endOfYear = now.endOf('year')
 let startOfWorkYear = dayjs(Math.max(+now.startOf('year'), +enlistment))
@@ -81,7 +89,8 @@ function initHomePage() {
   document.querySelector('#pay-counter > span.main-number').textContent = daysToPay
   document.querySelector('#leave-counter > span.main-number').textContent = `${leaveEntitled - thisYearClocked}/${leaveEntitled}`
 
-  document.querySelector('#pay-counter').className = `c100 p${Math.round(100 * (daysToPay / (daysFromLastPay + daysToPay)))} orange`
+  document.querySelector('#pay-counter').className = `c100 p${Math.round(100 - 100 * (daysToPay / (daysFromLastPay + daysToPay)))} orange`
+
   document.querySelector('#leave-counter').className = `c100 p${Math.round(100 * (thisYearClocked / leaveEntitled))} yellow`
 }
 
