@@ -30,7 +30,7 @@ if (now.get('date') <= 10) nextPayDay = dayjs().startOf('month').add(9, 'days')
 else nextPayDay = dayjs().startOf('month').add(1, 'month').add(9, 'days')
 if ([0, 6].includes(nextPayDay.get('day'))) nextPayDay = nextPayDay.add(-1, 'day').set('day', 5)
 
-let lastPayDay = dayjs().startOf('month').add(-1, 'month').add(9, 'days')
+let lastPayDay = nextPayDay.startOf('month').add(-1, 'month').add(9, 'days')
 if ([0, 6].includes(lastPayDay.get('day'))) lastPayDay = lastPayDay.add(-1, 'day').set('day', 5)
 
 if (nextPayDay < now) {
@@ -57,37 +57,60 @@ let leaveEntitled = Math.round(14 * yearLength / 365)
 let thisYear = now.get('year')
 let thisYearLeave = leaveUsed.filter(leave => leave.year === thisYear)
 let thisYearClocked = thisYearLeave.reduce((acc, leave) => acc + leave.duration, 0)
+let totalLeaveClocked = leaveUsed.reduce((acc, leave) => acc + leave.duration, 0)
+
+let daysToEndOfWeek = 0
+let thisFriday = now.set('day', 5)
+let nextMonday = now.startOf('week').add(1, 'week').add(1, 'day')
+if (thisFriday > now) daysToEndOfWeek = thisFriday.diff(now, 'days') + 1
+let ordWeekMonday = ordDay.startOf('week').add(1, 'day')
+let numberOfWeeks = ordWeekMonday.diff(nextMonday, 'weeks')
+let ordWeekDays = ordDay.diff(ordWeekMonday, 'days') + 1
+
+let workingDays = daysToEndOfWeek + numberOfWeeks * 5 + ordWeekDays - 28 + totalLeaveClocked
 
 function initHomePage() {
   if (daysToPOP < 0) {
     document.querySelector('#pop-counter > span.main-number').textContent = -daysToPOP
-    document.querySelector('#pop-counter > span.caption').textContent = 'Days since POP'
+    document.querySelector('#pop-counter > span.main-number').setAttribute('data-days', -daysToPOP)
+    document.querySelector('#pop-counter > span.caption > span.to-since').textContent = 'since'
     document.querySelector('#pop-counter').className = `c100 p100 blue`
   } else {
     document.querySelector('#pop-counter > span.main-number').textContent = daysToPOP
+    document.querySelector('#pop-counter > span.main-number').setAttribute('data-days', daysToPOP)
     document.querySelector('#pop-counter').className = `c100 p${Math.round(100 - 100 * (daysToPOP / bmtLength))} blue`
   }
 
   if (daysToSCSGP < 0) {
     document.querySelector('#scs-gp-counter > span.main-number').textContent = -daysToSCSGP
-    document.querySelector('#scs-gp-counter > span.caption').textContent = 'Days since GP'
+    document.querySelector('#scs-gp-counter > span.main-number').setAttribute('data-days', -daysToSCSGP)
+    document.querySelector('#scs-gp-counter > span.caption > span.to-since').textContent = 'since'
     document.querySelector('#scs-gp-counter').className = `c100 p100 purple`
   } else {
     document.querySelector('#scs-gp-counter > span.main-number').textContent = daysToSCSGP
+    document.querySelector('#scs-gp-counter > span.main-number').setAttribute('data-days', daysToSCSGP)
     document.querySelector('#scs-gp-counter').className = `c100 p${Math.round(100 - 100 * (daysToSCSGP / scsLength))} purple`
   }
 
   if (daysToORD < 0) {
     document.querySelector('#ord-counter > span.main-number').textContent = -daysToORD
-    document.querySelector('#ord-counter > span.caption').textContent = 'Days since ORD'
+    document.querySelector('#ord-counter > span.main-number').setAttribute('data-days', -daysToORD)
+    document.querySelector('#ord-counter > span.caption > span.to-since').textContent = 'since'
+    document.querySelector('#ord-counter > span.subcaption > span#working-days').textContent = '0'
     document.querySelector('#ord-counter').className = `c100 p100 pink`
   } else {
     document.querySelector('#ord-counter > span.main-number').textContent = daysToORD
+    document.querySelector('#ord-counter > span.main-number').setAttribute('data-days', daysToORD)
+    document.querySelector('#ord-counter > span.subcaption > span#working-days').textContent = workingDays
+    document.querySelector('#ord-counter > span.subcaption > span#working-days').setAttribute('data-days', workingDays)
     document.querySelector('#ord-counter').className = `c100 p${Math.round(100 - 100 * (daysToORD / serviceLength))} pink`
   }
 
   document.querySelector('#pay-counter > span.main-number').textContent = daysToPay
+  document.querySelector('#pay-counter > span.main-number').setAttribute('data-days', daysToPay)
+
   document.querySelector('#leave-counter > span.main-number').textContent = `${leaveEntitled - thisYearClocked}/${leaveEntitled}`
+  document.querySelector('#leave-counter > span.main-number').setAttribute('data-days', leaveEntitled - thisYearClocked)
 
   document.querySelector('#pay-counter').className = `c100 p${Math.round(100 - 100 * (daysToPay / (daysFromLastPay + daysToPay)))} orange`
 

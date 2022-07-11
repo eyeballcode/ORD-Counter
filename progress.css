@@ -106,6 +106,21 @@ body {
   -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
 }
+
+.c100 > span.subcaption {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 5em;
+  width: 13.33333em;
+  line-height: 9em;
+  font-size: 0.075em;
+  color: #3c4761;
+  display: block;
+  text-align: center;
+  white-space: nowrap;
+}
+
 .c100:after {
   position: absolute;
   top: 0.09em;
