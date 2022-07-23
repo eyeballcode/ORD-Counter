@@ -60,9 +60,9 @@ let thisYearClocked = thisYearLeave.reduce((acc, leave) => acc + leave.duration,
 let totalLeaveClocked = leaveUsed.reduce((acc, leave) => acc + leave.duration, 0)
 
 let daysToEndOfWeek = 0
-let thisFriday = now.set('day', 5)
-let nextMonday = now.startOf('week').add(1, 'week').add(1, 'day')
-if (thisFriday > now) daysToEndOfWeek = thisFriday.diff(now, 'days') + 1
+let thisFriday = now.startOf('isoWeek').set('day', 5)
+let nextMonday = now.startOf('isoWeek').add(1, 'week')
+if (thisFriday >= now) daysToEndOfWeek = thisFriday.diff(now, 'days') + 1
 let ordWeekMonday = ordDay.startOf('week').add(1, 'day')
 let numberOfWeeks = ordWeekMonday.diff(nextMonday, 'weeks')
 let ordWeekDays = ordDay.diff(ordWeekMonday, 'days') + 1
