@@ -13,6 +13,11 @@ let leaveUsed = [ // 0.5 - Half Day, 1.0 - Full Day
     day: dayjs('06 June 2022'),
     duration: 5.0,
     title: 'BMTC 02/22 POP Block Leave'
+  },
+  {
+    day: dayjs('08 Aug 2022'),
+    duration: 1.0,
+    title: 'SCS FT 53/22 Block Leave'
   }
 ]
 
