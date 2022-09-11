@@ -6,18 +6,18 @@
     </script>
   </head>
   <body>
-    <pre id="parade-data"></pre>
+    <p id="parade-data"></p>
     <script>
       $.ajax({
         url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTERQWxdmRtec9nWkfOLQKNtNyI-g5v-EHa5nb74I-fRebNm9Ee1aLFJxkrx029kseWrmp3MqMcZEiT/pub?gid=740057024&single=true&output=csv&_=' + +new Date()
       }, (err, status, data) => {
-        let lines = data.split('\r\n').map(line => line.split(',').join(' ').trim())
+        let lines = data.split('\r\n').map(line => line.replace(/,/g, ' ').trim())
         let headers = lines.slice(0, 4)
         let body = lines.slice(4)
 
         let bodyFiltered = body.filter(line => !!line).map(line => line === '-' ? '' : line)
 
-        $('#parade-data').textContent = `${headers.join('\n')}\n${bodyFiltered.join('\n')}`
+        $('#parade-data').innerHTML = `${headers.join('\n')}\n${bodyFiltered.join('\n')}`.replace(/\n/g, '<br>')
       })
     </script>
   </body>
