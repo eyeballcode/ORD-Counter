@@ -32,6 +32,14 @@ function onLatLonInput() {
   let [easting, northing] = computeRSO(parseFloat(latitudeInput.value), parseFloat(longitudeInput.value))
   eastingInput.value = easting / 10
   northingInput.value = northing / 10
+
+  let baseURL = getMapURL(latitudeInput.value, longitudeInput.value)
+  mapLink.href = baseURL
+
+  clearTimeout(projectionTimeout)
+  projectionTimeout = setTimeout(() => {
+    updateMap(latitudeInput.value, longitudeInput.value)
+  }, 3000)
 }
 
 function updateMap(latitude, longitude) {
