@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      function $(e,t){return t?t.querySelector(e):document.querySelector(e)}HTMLElement.prototype.on=HTMLElement.prototype.addEventListener,Window.prototype.on=Window.prototype.addEventListener,Object.defineProperty(XMLHttpRequest.prototype,"responseJSON",{get:function(){try{return JSON.parse(this.responseText)}catch(e){return}},enumerable:!1}),$.delete=function(e){$(e)&&$(e).parentElement.removeChild($(e))},$.ajax=function(e,t){var n=new XMLHttpRequest;n.addEventListener("load",function(){t(null,n.status,n.responseJSON||n.responseXML||n.responseText)}),n.addEventListener("error",function(e){t(e,n.status,null)}),n.open(e.method||"GET",e.url||location.toString()),e.data&&n.setRequestHeader("Content-Type","application/json"),n.send(JSON.stringify(e.data))},$.ready=function(e){"loading"!==document.readyState?setTimeout(e,0):document.addEventListener("DOMContentLoaded",e)};var query=location.query;window.search={},search.hash=(location.hash.match(/#(\w+[=]\w+&?)+/)||[]).slice(1).map(e=>e.split("=")).reduce((e,t)=>(e[t[0]]=t[1],e),{}),search.query=(location.search.match(/\?(\w+[=]\w+&?)+/)||[]).slice(1).map(e=>e.split("=")).reduce((e,t)=>(e[t[0]]=t[1],e),{}),$.ready(()=>{if(navigator.userAgent.toLowerCase().includes("mobile")){window.scrollTo(0,0);const e=window.innerHeight,t=window.innerWidth;$("meta[name=viewport]").setAttribute("content",`initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=${t}px, height=${e}px`)}}),$.inputTimeout=function(e,t){let n=0;e.on("input",()=>{clearTimeout(n),n=setTimeout(t,850,e.value)})},$.isPWA=function(){return window.matchMedia("(display-mode: standalone)").matches||1==window.navigator.standalone};
+    </script>
+  </head>
+  <body>
+    <pre id="parade-data"></pre>
+    <script>
+      $.ajax({
+        url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTERQWxdmRtec9nWkfOLQKNtNyI-g5v-EHa5nb74I-fRebNm9Ee1aLFJxkrx029kseWrmp3MqMcZEiT/pub?gid=740057024&single=true&output=csv'
+      }, (err, status, data) => {
+        let lines = data.split('\r\n').map(line => line.split(',').join(' ').trim())
+        let headers = lines.slice(0, 4)
+        let body = lines.slice(4)
+
+        let bodyFiltered = body.filter(line => !!line).map(line => line === '-' ? '' : line)
+
+        $('#parade-data').textContent = `${headers.join('\n')}\n${bodyFiltered.join('\n')}`
+      })
+    </script>
+  </body>
+</html>
