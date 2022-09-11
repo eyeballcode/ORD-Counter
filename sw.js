@@ -1,17 +1,20 @@
-const version = '9'
+const version = '10'
 const cacheName = `ordloh-${version}`
 
 function cacheFiles(files) {
   return caches.open(cacheName).then(cache => {
+    console.log('Caching files')
+
     return cache.addAll(files).then(() => self.skipWaiting())
-    .catch(e => {
-      console.error(e)
+    .catch(err => {
+      console.error(err)
+
       return ''
     })
   })
 }
 
-self.addEventListener('install', e => {
+self.addEventListener('install', event => {
   const timeStamp = Date.now()
 
   caches.keys().then(function (cachesNames) {
@@ -23,14 +26,19 @@ self.addEventListener('install', e => {
     }))
   })
 
-  e.waitUntil(
+  event.waitUntil(
     cacheFiles([
       '/',
       '/leave.html',
-      '/dayjs-utc-timezone-1.11.0.js',
+      '/dayjs-utc-timezone-isoweek-1.11.3.js',
+      '/bootstrap-4.6.1.min.css',
       '/icon.png',
       '/index.css',
       '/index.js',
+
+      '/malayan-rso.html',
+      '/malayan-rso.js',
+      '/malayan-rso-converter.js',
       '/manifest.json',
       '/progress.css',
       '/TitilliumWeb.woff2'
@@ -43,7 +51,9 @@ self.addEventListener('activate', event => {
 })
 
 self.addEventListener('fetch', event => {
-  if (event.request.method != 'GET') return
+  if (event.request.method !== 'GET') return
+
+  event.request.credentials = 'same-origin'
 
   event.respondWith(
     caches.open(cacheName)
