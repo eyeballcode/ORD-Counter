@@ -29,7 +29,7 @@ function onProjectedInput() {
 }
 
 function onLatLonInput() {
-  let [northing, easting] = computeRSO(parseFloat(latitudeInput.value), parseFloat(longitudeInput.value))
+  let [easting, northing] = computeRSO(parseFloat(latitudeInput.value), parseFloat(longitudeInput.value))
   eastingInput.value = easting / 10
   northingInput.value = northing / 10
 }
