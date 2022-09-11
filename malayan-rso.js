@@ -7,8 +7,8 @@ let f = 1 / 300.8017
 let oLat = 4
 let oLon = 102 + (15 / 60)
 
-let oE = 472854
-let oN = 442420
+let oE = 472854 - 280
+let oN = 442420 - 180
 
 let k = 1
 
