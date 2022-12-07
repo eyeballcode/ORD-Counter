@@ -18,7 +18,33 @@ let leaveUsed = [ // 0.5 - Half Day, 1.0 - Full Day
     day: dayjs('08 Aug 2022'),
     duration: 1.0,
     title: 'SCS FT 53/22 Block Leave'
+  },
+  {
+    day: dayjs('05 Dec 2022'),
+    duration: 1.0,
+    title: 'BMTC 04/22 Family Day'
+  },
+  {
+    day: dayjs('27 Aug 2022'),
+    duration: 4.0,
+    title: 'ANNUAL LEAVE CLEARING'
   }
+]
+
+let offAccumulated = [
+  {
+    day: dayjs('26 Nov 2022'),
+    duration: 3,
+    title: 'COMD BMTC - 04/22 POP OFF'
+  },
+  {
+    day: dayjs('26 Dec 2022'),
+    duration: 1,
+    title: 'COS - CHRISTMAS OFF'
+  }
+]
+
+let offUsed = [
 ]
 
 leaveUsed.forEach(leave => { leave.year = leave.day.get('year') })
@@ -63,6 +89,9 @@ let thisYear = now.get('year')
 let thisYearLeave = leaveUsed.filter(leave => leave.year === thisYear)
 let thisYearClocked = thisYearLeave.reduce((acc, leave) => acc + leave.duration, 0)
 let totalLeaveClocked = leaveUsed.reduce((acc, leave) => acc + leave.duration, 0)
+
+let offDaysGiven = offAccumulated.reduce((acc, off) => acc + off.duration, 0)
+let offDaysUsed = offUsed.reduce((acc, off) => acc + off.duration, 0)
 
 let daysToEndOfWeek = 0
 let thisFriday = now.startOf('isoWeek').set('day', 5)
@@ -117,6 +146,9 @@ function initHomePage() {
   document.querySelector('#leave-counter > span.main-number').textContent = `${leaveEntitled - thisYearClocked}/${leaveEntitled}`
   document.querySelector('#leave-counter > span.main-number').setAttribute('data-days', leaveEntitled - thisYearClocked)
 
+  document.querySelector('#off-counter > span.main-number').textContent = `${offDaysGiven - offDaysUsed}/${offDaysGiven}`
+  document.querySelector('#off-counter > span.main-number').setAttribute('data-days', offDaysGiven - offDaysUsed)
+
   document.querySelector('#pay-counter').className = `c100 p${Math.round(100 - 100 * (daysToPay / (daysFromLastPay + daysToPay)))} orange`
 
   document.querySelector('#leave-counter').className = `c100 p${Math.round(100 * (thisYearClocked / leaveEntitled))} yellow`
@@ -137,11 +169,23 @@ function initLeavePage() {
   document.getElementById('leave-overview').textContent = `Leave Remaining: ${leaveEntitled - thisYearClocked}/${leaveEntitled} Days`
 }
 
+function initOffPage() {
+  let html = offAccumulated.map(off => {
+    return `<h2>${off.title} (${off.day.format('DD MMM YYYY')})</h2>
+<p>Duration: ${off.duration} Day${off.duration === 1 ? '' : 's'}</p>`
+  }).join('')
+
+  document.getElementById('off-content').innerHTML = html
+  document.getElementById('off-overview').textContent = `Off Remaining: ${offDaysGiven - offDaysUsed}/${offDaysGiven} Days`
+}
+
 if (location.pathname === '/') {
   initHomePage()
   setInterval(initHomePage, 1000)
 } else if (location.pathname === '/leave.html') {
   initLeavePage()
+} else if (location.pathname === '/off.html') {
+  initOffPage()
 }
 
 if ('serviceWorker' in navigator) {

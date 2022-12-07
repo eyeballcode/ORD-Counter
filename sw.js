@@ -1,4 +1,4 @@
-const version = '12'
+const version = '13'
 const cacheName = `ordloh-${version}`
 
 function cacheFiles(files) {
