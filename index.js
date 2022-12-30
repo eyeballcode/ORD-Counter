@@ -40,7 +40,22 @@ let offAccumulated = [
   {
     day: dayjs('26 Dec 2022'),
     duration: 1,
-    title: 'COS - CHRISTMAS OFF'
+    title: 'COS - CHRISTMAS'
+  },
+  {
+    day: dayjs('28 Dec 2022'),
+    duration: 2,
+    title: 'LEAVE REFUNDED - C COY BTP'
+  },
+  {
+    day: dayjs('31 Dec 2022'),
+    duration: 1,
+    title: 'COS - NEW YEARS EVE'
+  },
+  {
+    day: dayjs('2 JAN 2022'),
+    duration: 1,
+    title: 'COS - NEW YEARS DAY OBSERVED'
   }
 ]
 
