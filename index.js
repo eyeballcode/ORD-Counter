@@ -60,6 +60,19 @@ let offAccumulated = [
 ]
 
 let offUsed = [
+  {
+    day: dayjs('9 Jan 2023'),
+    duration: 2.0,
+    title: 'Off Clearing'
+  }, {
+    day: dayjs('13 Jan 2023'),
+    duration: 1.0,
+    title: 'Off Clearing'
+  }, {
+    day: dayjs('20 Jan 2023'),
+    duration: 1.0,
+    title: 'Off Clearing'
+  }
 ]
 
 leaveUsed.forEach(leave => { leave.year = leave.day.get('year') })
@@ -167,6 +180,7 @@ function initHomePage() {
   document.querySelector('#pay-counter').className = `c100 p${Math.round(100 - 100 * (daysToPay / (daysFromLastPay + daysToPay)))} orange`
 
   document.querySelector('#leave-counter').className = `c100 p${Math.round(100 * (thisYearClocked / leaveEntitled))} yellow`
+  document.querySelector('#off-counter').className = `c100 p${Math.round(100 * (offDaysUsed / offDaysGiven))} yellow`
 }
 
 function initLeavePage() {
