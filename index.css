@@ -31,7 +31,7 @@ span.number[data-days="1"] ~ span > span.plural-s {
   display: none;
 }
 
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 1400px) {
   .center-content {
     flex-direction: column;
   }

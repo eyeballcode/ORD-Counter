@@ -62,16 +62,13 @@ let offAccumulated = [
 let offUsed = [
   {
     day: dayjs('9 Jan 2023'),
-    duration: 2.0,
-    title: 'Off Clearing'
+    duration: 2.0
   }, {
     day: dayjs('13 Jan 2023'),
-    duration: 1.0,
-    title: 'Off Clearing'
+    duration: 1.0
   }, {
     day: dayjs('20 Jan 2023'),
-    duration: 1.0,
-    title: 'Off Clearing'
+    duration: 1.0
   }
 ]
 
@@ -81,12 +78,12 @@ let now = dayjs().startOf('day')
 let enlistment = dayjs('08 Feb 2022')
 let popDay = dayjs('04 June 2022')
 let scsPostingDay = dayjs('13 Jun 2022')
-let scsGPDay = dayjs('18 Nov 2022')
+let scsGPDay = dayjs('17 Nov 2022')
 let ordDay = dayjs('07 Feb 2024')
 
 let nextPayDay
-if (now.get('date') <= 10) nextPayDay = dayjs().startOf('month').add(9, 'days')
-else nextPayDay = dayjs().startOf('month').add(1, 'month').add(9, 'days')
+if (now.get('date') <= 10) nextPayDay = now.startOf('month').add(9, 'days')
+else nextPayDay = now.startOf('month').add(1, 'month').add(9, 'days')
 if ([0, 6].includes(nextPayDay.get('day'))) nextPayDay = nextPayDay.add(-1, 'day').set('day', 5)
 
 let lastPayDay = nextPayDay.startOf('month').add(-1, 'month').add(9, 'days')
@@ -94,7 +91,7 @@ if ([0, 6].includes(lastPayDay.get('day'))) lastPayDay = lastPayDay.add(-1, 'day
 
 if (nextPayDay < now) {
   lastPayDay = nextPayDay
-  nextPayDay = dayjs().startOf('month').add(1, 'month').add(9, 'days')
+  nextPayDay = now.startOf('month').add(1, 'month').add(9, 'days')
 }
 
 let endOfYear = now.endOf('year')

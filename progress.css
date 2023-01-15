@@ -6,7 +6,7 @@
 }
 
 body {
-  font-family: "Titillium Web", sans-serif;
+  font-family: monospace;, sans-serif;
   margin: 0 auto;
 }
 
@@ -34,11 +34,6 @@ body {
   transform: rotate(180deg);
 }
 
-.wrapper {
-  width: 1200px;
-  margin: 0 auto;
-}
-
 .c100 {
   position: relative;
   font-size: 20vh;
@@ -59,62 +54,35 @@ body {
   width: 100%;
   z-index: 1;
   left: 0;
-  top: -0.3em;
-  width: 5em;
-  line-height: 5em;
+  top: 35%;
+  width: 100%;
   font-size: 0.2em;
   color: #3c4761;
   display: block;
   text-align: center;
   white-space: nowrap;
-  -moz-transition-property: all;
-  -o-transition-property: all;
-  -webkit-transition-property: all;
-  transition-property: all;
-  -moz-transition-duration: 0.2s;
-  -o-transition-duration: 0.2s;
-  -webkit-transition-duration: 0.2s;
-  transition-duration: 0.2s;
-  -moz-transition-timing-function: ease-out;
-  -o-transition-timing-function: ease-out;
-  -webkit-transition-timing-function: ease-out;
-  transition-timing-function: ease-out;
 }
 
 .c100 > span.caption {
   position: absolute;
   z-index: 1;
   left: 0;
-  top: 0.9em;
-  width: 9.0909em;
-  line-height: 9.0909em;
-  font-size: 0.11em;
+  top: 57%;
+  width: 100%;
+  font-size: 0.08em;
   color: #3c4761;
   display: block;
   text-align: center;
   white-space: nowrap;
-  -moz-transition-property: all;
-  -o-transition-property: all;
-  -webkit-transition-property: all;
-  transition-property: all;
-  -moz-transition-duration: 0.2s;
-  -o-transition-duration: 0.2s;
-  -webkit-transition-duration: 0.2s;
-  transition-duration: 0.2s;
-  -moz-transition-timing-function: ease-out;
-  -o-transition-timing-function: ease-out;
-  -webkit-transition-timing-function: ease-out;
-  transition-timing-function: ease-out;
 }
 
 .c100 > span.subcaption {
   position: absolute;
   z-index: 1;
   left: 0;
-  top: 5em;
-  width: 13.33333em;
-  line-height: 9em;
-  font-size: 0.075em;
+  top: 67%;
+  width: 100%;
+  font-size: 0.07em;
   color: #3c4761;
   display: block;
   text-align: center;
@@ -131,18 +99,10 @@ body {
   background-color: #ffffff;
   width: 0.82em;
   height: 0.82em;
-  -moz-transition-property: all;
-  -o-transition-property: all;
-  -webkit-transition-property: all;
-  transition-property: all;
-  -moz-transition-duration: 0.2s;
-  -o-transition-duration: 0.2s;
-  -webkit-transition-duration: 0.2s;
-  transition-duration: 0.2s;
-  -moz-transition-timing-function: ease-in;
-  -o-transition-timing-function: ease-in;
-  -webkit-transition-timing-function: ease-in;
-  transition-timing-function: ease-in;
+}
+
+.c100:has(.subcaption) > .main-number, .c100:has(.subcaption) > .caption, .c100:has(.subcaption) > .subcaption {
+  margin-top: -5%;
 }
 
 .c100 .slice {
