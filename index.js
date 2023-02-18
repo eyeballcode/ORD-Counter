@@ -53,7 +53,7 @@ let offAccumulated = [
     title: 'COS - NEW YEARS EVE'
   },
   {
-    day: dayjs('2 JAN 2022'),
+    day: dayjs('2 Jan 2022'),
     duration: 1,
     title: 'COS - NEW YEARS DAY OBSERVED'
   }
@@ -68,6 +68,12 @@ let offUsed = [
     duration: 1.0
   }, {
     day: dayjs('20 Jan 2023'),
+    duration: 1.0
+  }, {
+    day: dayjs('6 Mar 2023'),
+    duration: 1.0
+  }, {
+    day: dayjs('10 Mar 2023'),
     duration: 1.0
   }
 ]
